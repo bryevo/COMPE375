@@ -3,31 +3,31 @@ Lab5.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  0000027c  2**0
+  0 .data         00000000  00800100  00800100  00000286  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000228  00000000  00000000  00000054  2**1
+  1 .text         00000232  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  0000027c  2**0
+  2 .comment      00000030  00000000  00000000  00000286  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000002ac  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000002b8  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000038  00000000  00000000  000002ec  2**0
+  4 .debug_aranges 00000038  00000000  00000000  000002f8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000001eb  00000000  00000000  00000324  2**0
+  5 .debug_info   000001eb  00000000  00000000  00000330  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 0000014f  00000000  00000000  0000050f  2**0
+  6 .debug_abbrev 0000014f  00000000  00000000  0000051b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000006e1  00000000  00000000  0000065e  2**0
+  7 .debug_line   000006f3  00000000  00000000  0000066a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000070  00000000  00000000  00000d40  2**2
+  8 .debug_frame  00000070  00000000  00000000  00000d60  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000fff7  00000000  00000000  00000db0  2**0
+  9 .debug_str    0000ffed  00000000  00000000  00000dd0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000127  00000000  00000000  00010da7  2**0
+ 10 .debug_loc    00000127  00000000  00000000  00010dbd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000040  00000000  00000000  00010ece  2**0
+ 11 .debug_ranges 00000040  00000000  00000000  00010ee4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  0000064e  00000000  00000000  00010f0e  2**0
+ 12 .debug_macro  0000064e  00000000  00000000  00010f24  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -93,8 +93,8 @@ Disassembly of section .text:
   6e:	d8 e0       	ldi	r29, 0x08	; 8
   70:	de bf       	out	0x3e, r29	; 62
   72:	cd bf       	out	0x3d, r28	; 61
-  74:	bd d0       	rcall	.+378    	; 0x1f0 <main>
-  76:	d6 c0       	rjmp	.+428    	; 0x224 <_exit>
+  74:	c2 d0       	rcall	.+388    	; 0x1fa <main>
+  76:	db c0       	rjmp	.+438    	; 0x22e <_exit>
 
 00000078 <__bad_interrupt>:
   78:	c3 cf       	rjmp	.-122    	; 0x0 <__vectors>
@@ -119,352 +119,364 @@ char scan_keypad()
 		PORTD |= 0xFF;		//reset
   88:	ff 24       	eor	r15, r15
   8a:	fa 94       	dec	r15
+		PORTD &= ~(1<<col);		//sets specific PORTD/PIN(col) to 0 and everything else 1.
   8c:	c1 e0       	ldi	r28, 0x01	; 1
   8e:	d0 e0       	ldi	r29, 0x00	; 0
   90:	00 e0       	ldi	r16, 0x00	; 0
   92:	10 e0       	ldi	r17, 0x00	; 0
-  94:	8b b1       	in	r24, 0x0b	; 11
-  96:	fb b8       	out	0x0b, r15	; 11
-  98:	de 01       	movw	r26, r28
-  9a:	06 2e       	mov	r0, r22
-  9c:	02 c0       	rjmp	.+4      	; 0xa2 <scan_keypad+0x28>
-  9e:	aa 0f       	add	r26, r26
-  a0:	bb 1f       	adc	r27, r27
-  a2:	0a 94       	dec	r0
-  a4:	e2 f7       	brpl	.-8      	; 0x9e <scan_keypad+0x24>
-  a6:	ae 01       	movw	r20, r28
-  a8:	20 2f       	mov	r18, r16
-  aa:	31 2f       	mov	r19, r17
-  ac:	04 c0       	rjmp	.+8      	; 0xb6 <scan_keypad+0x3c>
-  ae:	2f 5f       	subi	r18, 0xFF	; 255
-  b0:	3f 4f       	sbci	r19, 0xFF	; 255
-  b2:	4f 5f       	subi	r20, 0xFF	; 255
-  b4:	5f 4f       	sbci	r21, 0xFF	; 255
-  b6:	f9 01       	movw	r30, r18
-		//PORTD &= ~(1<<col);		//sets specific PORTD/PIN(col) to 0 and everything else 1.
-		for (int row = 0; row < 4; row++) 
-		{
-			PORTB |= 0x0F;		//reset
-  b8:	85 b1       	in	r24, 0x05	; 5
-  ba:	8f 60       	ori	r24, 0x0F	; 15
-  bc:	85 b9       	out	0x05, r24	; 5
-			if (!(PINB & (1<<row)) && !(PIND & (1<<col)))	//checks if 
-  be:	83 b1       	in	r24, 0x03	; 3
-  c0:	90 e0       	ldi	r25, 0x00	; 0
-  c2:	02 2e       	mov	r0, r18
-  c4:	02 c0       	rjmp	.+4      	; 0xca <scan_keypad+0x50>
-  c6:	95 95       	asr	r25
-  c8:	87 95       	ror	r24
-  ca:	0a 94       	dec	r0
-  cc:	e2 f7       	brpl	.-8      	; 0xc6 <scan_keypad+0x4c>
-  ce:	80 fd       	sbrc	r24, 0
-  d0:	46 c0       	rjmp	.+140    	; 0x15e <scan_keypad+0xe4>
-  d2:	89 b1       	in	r24, 0x09	; 9
-  d4:	90 e0       	ldi	r25, 0x00	; 0
-  d6:	8a 23       	and	r24, r26
-  d8:	9b 23       	and	r25, r27
-  da:	89 2b       	or	r24, r25
-  dc:	09 f0       	breq	.+2      	; 0xe0 <scan_keypad+0x66>
-  de:	3f c0       	rjmp	.+126    	; 0x15e <scan_keypad+0xe4>
-			{
-				if (col == 4 && row == 0)
-  e0:	64 30       	cpi	r22, 0x04	; 4
-  e2:	71 05       	cpc	r23, r1
-  e4:	79 f4       	brne	.+30     	; 0x104 <scan_keypad+0x8a>
-  e6:	ef 2b       	or	r30, r31
-  e8:	09 f4       	brne	.+2      	; 0xec <scan_keypad+0x72>
-  ea:	44 c0       	rjmp	.+136    	; 0x174 <scan_keypad+0xfa>
-					return '1';
-				else if (col == 4 && row == 1)
-  ec:	21 30       	cpi	r18, 0x01	; 1
-  ee:	31 05       	cpc	r19, r1
-  f0:	09 f4       	brne	.+2      	; 0xf4 <scan_keypad+0x7a>
-  f2:	42 c0       	rjmp	.+132    	; 0x178 <scan_keypad+0xfe>
-					return '2';
-				else if (col == 4 && row == 2)
-  f4:	22 30       	cpi	r18, 0x02	; 2
-  f6:	31 05       	cpc	r19, r1
-  f8:	09 f4       	brne	.+2      	; 0xfc <scan_keypad+0x82>
-  fa:	40 c0       	rjmp	.+128    	; 0x17c <scan_keypad+0x102>
-					return '3';
-				else if (col == 4 && row == 3)
-  fc:	23 30       	cpi	r18, 0x03	; 3
-  fe:	31 05       	cpc	r19, r1
- 100:	71 f5       	brne	.+92     	; 0x15e <scan_keypad+0xe4>
- 102:	3e c0       	rjmp	.+124    	; 0x180 <scan_keypad+0x106>
-					return 'A';
-				else if (col == 5 && row == 0)
- 104:	65 30       	cpi	r22, 0x05	; 5
- 106:	71 05       	cpc	r23, r1
- 108:	61 f4       	brne	.+24     	; 0x122 <scan_keypad+0xa8>
- 10a:	ef 2b       	or	r30, r31
- 10c:	d9 f1       	breq	.+118    	; 0x184 <scan_keypad+0x10a>
-					return '4';
-				else if (col == 5 && row == 1)
- 10e:	21 30       	cpi	r18, 0x01	; 1
- 110:	31 05       	cpc	r19, r1
- 112:	d1 f1       	breq	.+116    	; 0x188 <scan_keypad+0x10e>
-					return '5';
-				else if (col == 5 && row == 2)
- 114:	22 30       	cpi	r18, 0x02	; 2
- 116:	31 05       	cpc	r19, r1
- 118:	c9 f1       	breq	.+114    	; 0x18c <scan_keypad+0x112>
-					return '6';
-				else if (col == 5 && row == 3)
- 11a:	23 30       	cpi	r18, 0x03	; 3
- 11c:	31 05       	cpc	r19, r1
- 11e:	f9 f4       	brne	.+62     	; 0x15e <scan_keypad+0xe4>
- 120:	37 c0       	rjmp	.+110    	; 0x190 <scan_keypad+0x116>
-					return 'B';
-				else if (col == 6 && row == 0)
- 122:	66 30       	cpi	r22, 0x06	; 6
- 124:	71 05       	cpc	r23, r1
- 126:	61 f4       	brne	.+24     	; 0x140 <scan_keypad+0xc6>
- 128:	ef 2b       	or	r30, r31
- 12a:	a1 f1       	breq	.+104    	; 0x194 <scan_keypad+0x11a>
-					return '7';
-				else if (col == 6 && row == 1)
- 12c:	21 30       	cpi	r18, 0x01	; 1
- 12e:	31 05       	cpc	r19, r1
- 130:	99 f1       	breq	.+102    	; 0x198 <scan_keypad+0x11e>
-					return '8';
-				else if (col == 6 && row == 2)
- 132:	22 30       	cpi	r18, 0x02	; 2
- 134:	31 05       	cpc	r19, r1
- 136:	91 f1       	breq	.+100    	; 0x19c <scan_keypad+0x122>
-					return '9';
-				else if (col == 6 && row == 3)
- 138:	23 30       	cpi	r18, 0x03	; 3
- 13a:	31 05       	cpc	r19, r1
- 13c:	81 f4       	brne	.+32     	; 0x15e <scan_keypad+0xe4>
- 13e:	30 c0       	rjmp	.+96     	; 0x1a0 <scan_keypad+0x126>
-					return 'C';
-				else if (col == 7 && row == 0)
- 140:	67 30       	cpi	r22, 0x07	; 7
- 142:	71 05       	cpc	r23, r1
- 144:	61 f4       	brne	.+24     	; 0x15e <scan_keypad+0xe4>
- 146:	ef 2b       	or	r30, r31
- 148:	69 f1       	breq	.+90     	; 0x1a4 <scan_keypad+0x12a>
-					return '*';
-				else if (col == 7 && row == 1)
- 14a:	21 30       	cpi	r18, 0x01	; 1
- 14c:	31 05       	cpc	r19, r1
- 14e:	61 f1       	breq	.+88     	; 0x1a8 <scan_keypad+0x12e>
-					return '0';
-				else if (col == 7 && row == 2)
- 150:	22 30       	cpi	r18, 0x02	; 2
- 152:	31 05       	cpc	r19, r1
- 154:	59 f1       	breq	.+86     	; 0x1ac <scan_keypad+0x132>
-					return '#';
-				else if (col == 7 && row == 3)
- 156:	23 30       	cpi	r18, 0x03	; 3
- 158:	31 05       	cpc	r19, r1
- 15a:	61 f5       	brne	.+88     	; 0x1b4 <scan_keypad+0x13a>
- 15c:	29 c0       	rjmp	.+82     	; 0x1b0 <scan_keypad+0x136>
+char scan_keypad()
+{
 	
 	for (int col = 4; col < 8; col++)
 	{
 		PORTD |= 0xFF;		//reset
-		//PORTD &= ~(1<<col);		//sets specific PORTD/PIN(col) to 0 and everything else 1.
+  94:	8b b1       	in	r24, 0x0b	; 11
+  96:	fb b8       	out	0x0b, r15	; 11
+		PORTD &= ~(1<<col);		//sets specific PORTD/PIN(col) to 0 and everything else 1.
+  98:	8b b1       	in	r24, 0x0b	; 11
+  9a:	de 01       	movw	r26, r28
+  9c:	06 2e       	mov	r0, r22
+  9e:	02 c0       	rjmp	.+4      	; 0xa4 <scan_keypad+0x2a>
+  a0:	aa 0f       	add	r26, r26
+  a2:	bb 1f       	adc	r27, r27
+  a4:	0a 94       	dec	r0
+  a6:	e2 f7       	brpl	.-8      	; 0xa0 <scan_keypad+0x26>
+  a8:	9a 2f       	mov	r25, r26
+  aa:	90 95       	com	r25
+  ac:	89 23       	and	r24, r25
+  ae:	8b b9       	out	0x0b, r24	; 11
+  b0:	ae 01       	movw	r20, r28
+  b2:	20 2f       	mov	r18, r16
+  b4:	31 2f       	mov	r19, r17
+  b6:	04 c0       	rjmp	.+8      	; 0xc0 <scan_keypad+0x46>
+  b8:	2f 5f       	subi	r18, 0xFF	; 255
+  ba:	3f 4f       	sbci	r19, 0xFF	; 255
+  bc:	4f 5f       	subi	r20, 0xFF	; 255
+  be:	5f 4f       	sbci	r21, 0xFF	; 255
+  c0:	f9 01       	movw	r30, r18
 		for (int row = 0; row < 4; row++) 
- 15e:	44 30       	cpi	r20, 0x04	; 4
- 160:	51 05       	cpc	r21, r1
- 162:	0c f4       	brge	.+2      	; 0x166 <scan_keypad+0xec>
- 164:	a4 cf       	rjmp	.-184    	; 0xae <scan_keypad+0x34>
+		{
+			PORTB |= 0x0F;		//reset
+  c2:	85 b1       	in	r24, 0x05	; 5
+  c4:	8f 60       	ori	r24, 0x0F	; 15
+  c6:	85 b9       	out	0x05, r24	; 5
+			if (!(PINB & (1<<row)) && !(PIND & (1<<col)))	//checks for 0's for the row and col
+  c8:	83 b1       	in	r24, 0x03	; 3
+  ca:	90 e0       	ldi	r25, 0x00	; 0
+  cc:	02 2e       	mov	r0, r18
+  ce:	02 c0       	rjmp	.+4      	; 0xd4 <scan_keypad+0x5a>
+  d0:	95 95       	asr	r25
+  d2:	87 95       	ror	r24
+  d4:	0a 94       	dec	r0
+  d6:	e2 f7       	brpl	.-8      	; 0xd0 <scan_keypad+0x56>
+  d8:	80 fd       	sbrc	r24, 0
+  da:	46 c0       	rjmp	.+140    	; 0x168 <scan_keypad+0xee>
+  dc:	89 b1       	in	r24, 0x09	; 9
+  de:	90 e0       	ldi	r25, 0x00	; 0
+  e0:	8a 23       	and	r24, r26
+  e2:	9b 23       	and	r25, r27
+  e4:	89 2b       	or	r24, r25
+  e6:	09 f0       	breq	.+2      	; 0xea <scan_keypad+0x70>
+  e8:	3f c0       	rjmp	.+126    	; 0x168 <scan_keypad+0xee>
+			{
+				if (col == 4 && row == 0)
+  ea:	64 30       	cpi	r22, 0x04	; 4
+  ec:	71 05       	cpc	r23, r1
+  ee:	79 f4       	brne	.+30     	; 0x10e <scan_keypad+0x94>
+  f0:	ef 2b       	or	r30, r31
+  f2:	09 f4       	brne	.+2      	; 0xf6 <scan_keypad+0x7c>
+  f4:	44 c0       	rjmp	.+136    	; 0x17e <scan_keypad+0x104>
+					return '1';
+				else if (col == 4 && row == 1)
+  f6:	21 30       	cpi	r18, 0x01	; 1
+  f8:	31 05       	cpc	r19, r1
+  fa:	09 f4       	brne	.+2      	; 0xfe <scan_keypad+0x84>
+  fc:	42 c0       	rjmp	.+132    	; 0x182 <scan_keypad+0x108>
+					return '2';
+				else if (col == 4 && row == 2)
+  fe:	22 30       	cpi	r18, 0x02	; 2
+ 100:	31 05       	cpc	r19, r1
+ 102:	09 f4       	brne	.+2      	; 0x106 <scan_keypad+0x8c>
+ 104:	40 c0       	rjmp	.+128    	; 0x186 <scan_keypad+0x10c>
+					return '3';
+				else if (col == 4 && row == 3)
+ 106:	23 30       	cpi	r18, 0x03	; 3
+ 108:	31 05       	cpc	r19, r1
+ 10a:	71 f5       	brne	.+92     	; 0x168 <scan_keypad+0xee>
+ 10c:	3e c0       	rjmp	.+124    	; 0x18a <scan_keypad+0x110>
+					return 'A';
+				else if (col == 5 && row == 0)
+ 10e:	65 30       	cpi	r22, 0x05	; 5
+ 110:	71 05       	cpc	r23, r1
+ 112:	61 f4       	brne	.+24     	; 0x12c <scan_keypad+0xb2>
+ 114:	ef 2b       	or	r30, r31
+ 116:	d9 f1       	breq	.+118    	; 0x18e <scan_keypad+0x114>
+					return '4';
+				else if (col == 5 && row == 1)
+ 118:	21 30       	cpi	r18, 0x01	; 1
+ 11a:	31 05       	cpc	r19, r1
+ 11c:	d1 f1       	breq	.+116    	; 0x192 <scan_keypad+0x118>
+					return '5';
+				else if (col == 5 && row == 2)
+ 11e:	22 30       	cpi	r18, 0x02	; 2
+ 120:	31 05       	cpc	r19, r1
+ 122:	c9 f1       	breq	.+114    	; 0x196 <scan_keypad+0x11c>
+					return '6';
+				else if (col == 5 && row == 3)
+ 124:	23 30       	cpi	r18, 0x03	; 3
+ 126:	31 05       	cpc	r19, r1
+ 128:	f9 f4       	brne	.+62     	; 0x168 <scan_keypad+0xee>
+ 12a:	37 c0       	rjmp	.+110    	; 0x19a <scan_keypad+0x120>
+					return 'B';
+				else if (col == 6 && row == 0)
+ 12c:	66 30       	cpi	r22, 0x06	; 6
+ 12e:	71 05       	cpc	r23, r1
+ 130:	61 f4       	brne	.+24     	; 0x14a <scan_keypad+0xd0>
+ 132:	ef 2b       	or	r30, r31
+ 134:	a1 f1       	breq	.+104    	; 0x19e <scan_keypad+0x124>
+					return '7';
+				else if (col == 6 && row == 1)
+ 136:	21 30       	cpi	r18, 0x01	; 1
+ 138:	31 05       	cpc	r19, r1
+ 13a:	99 f1       	breq	.+102    	; 0x1a2 <scan_keypad+0x128>
+					return '8';
+				else if (col == 6 && row == 2)
+ 13c:	22 30       	cpi	r18, 0x02	; 2
+ 13e:	31 05       	cpc	r19, r1
+ 140:	91 f1       	breq	.+100    	; 0x1a6 <scan_keypad+0x12c>
+					return '9';
+				else if (col == 6 && row == 3)
+ 142:	23 30       	cpi	r18, 0x03	; 3
+ 144:	31 05       	cpc	r19, r1
+ 146:	81 f4       	brne	.+32     	; 0x168 <scan_keypad+0xee>
+ 148:	30 c0       	rjmp	.+96     	; 0x1aa <scan_keypad+0x130>
+					return 'C';
+				else if (col == 7 && row == 0)
+ 14a:	67 30       	cpi	r22, 0x07	; 7
+ 14c:	71 05       	cpc	r23, r1
+ 14e:	61 f4       	brne	.+24     	; 0x168 <scan_keypad+0xee>
+ 150:	ef 2b       	or	r30, r31
+ 152:	69 f1       	breq	.+90     	; 0x1ae <scan_keypad+0x134>
+					return '*';
+				else if (col == 7 && row == 1)
+ 154:	21 30       	cpi	r18, 0x01	; 1
+ 156:	31 05       	cpc	r19, r1
+ 158:	61 f1       	breq	.+88     	; 0x1b2 <scan_keypad+0x138>
+					return '0';
+				else if (col == 7 && row == 2)
+ 15a:	22 30       	cpi	r18, 0x02	; 2
+ 15c:	31 05       	cpc	r19, r1
+ 15e:	59 f1       	breq	.+86     	; 0x1b6 <scan_keypad+0x13c>
+					return '#';
+				else if (col == 7 && row == 3)
+ 160:	23 30       	cpi	r18, 0x03	; 3
+ 162:	31 05       	cpc	r19, r1
+ 164:	61 f5       	brne	.+88     	; 0x1be <scan_keypad+0x144>
+ 166:	29 c0       	rjmp	.+82     	; 0x1ba <scan_keypad+0x140>
+	
+	for (int col = 4; col < 8; col++)
+	{
+		PORTD |= 0xFF;		//reset
+		PORTD &= ~(1<<col);		//sets specific PORTD/PIN(col) to 0 and everything else 1.
+		for (int row = 0; row < 4; row++) 
+ 168:	44 30       	cpi	r20, 0x04	; 4
+ 16a:	51 05       	cpc	r21, r1
+ 16c:	0c f4       	brge	.+2      	; 0x170 <scan_keypad+0xf6>
+ 16e:	a4 cf       	rjmp	.-184    	; 0xb8 <scan_keypad+0x3e>
 void USART_Transmit(unsigned char ch);
 
 char scan_keypad()
 {
 	
 	for (int col = 4; col < 8; col++)
- 166:	6f 5f       	subi	r22, 0xFF	; 255
- 168:	7f 4f       	sbci	r23, 0xFF	; 255
- 16a:	68 30       	cpi	r22, 0x08	; 8
- 16c:	71 05       	cpc	r23, r1
- 16e:	09 f0       	breq	.+2      	; 0x172 <scan_keypad+0xf8>
- 170:	91 cf       	rjmp	.-222    	; 0x94 <scan_keypad+0x1a>
- 172:	25 c0       	rjmp	.+74     	; 0x1be <scan_keypad+0x144>
+ 170:	6f 5f       	subi	r22, 0xFF	; 255
+ 172:	7f 4f       	sbci	r23, 0xFF	; 255
+ 174:	68 30       	cpi	r22, 0x08	; 8
+ 176:	71 05       	cpc	r23, r1
+ 178:	09 f0       	breq	.+2      	; 0x17c <scan_keypad+0x102>
+ 17a:	8c cf       	rjmp	.-232    	; 0x94 <scan_keypad+0x1a>
+ 17c:	25 c0       	rjmp	.+74     	; 0x1c8 <scan_keypad+0x14e>
 		{
 			PORTB |= 0x0F;		//reset
-			if (!(PINB & (1<<row)) && !(PIND & (1<<col)))	//checks if 
+			if (!(PINB & (1<<row)) && !(PIND & (1<<col)))	//checks for 0's for the row and col
 			{
 				if (col == 4 && row == 0)
 					return '1';
- 174:	81 e3       	ldi	r24, 0x31	; 49
- 176:	23 c0       	rjmp	.+70     	; 0x1be <scan_keypad+0x144>
+ 17e:	81 e3       	ldi	r24, 0x31	; 49
+ 180:	23 c0       	rjmp	.+70     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 4 && row == 1)
 					return '2';
- 178:	82 e3       	ldi	r24, 0x32	; 50
- 17a:	21 c0       	rjmp	.+66     	; 0x1be <scan_keypad+0x144>
+ 182:	82 e3       	ldi	r24, 0x32	; 50
+ 184:	21 c0       	rjmp	.+66     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 4 && row == 2)
 					return '3';
- 17c:	83 e3       	ldi	r24, 0x33	; 51
- 17e:	1f c0       	rjmp	.+62     	; 0x1be <scan_keypad+0x144>
+ 186:	83 e3       	ldi	r24, 0x33	; 51
+ 188:	1f c0       	rjmp	.+62     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 4 && row == 3)
 					return 'A';
- 180:	81 e4       	ldi	r24, 0x41	; 65
- 182:	1d c0       	rjmp	.+58     	; 0x1be <scan_keypad+0x144>
+ 18a:	81 e4       	ldi	r24, 0x41	; 65
+ 18c:	1d c0       	rjmp	.+58     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 5 && row == 0)
 					return '4';
- 184:	84 e3       	ldi	r24, 0x34	; 52
- 186:	1b c0       	rjmp	.+54     	; 0x1be <scan_keypad+0x144>
+ 18e:	84 e3       	ldi	r24, 0x34	; 52
+ 190:	1b c0       	rjmp	.+54     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 5 && row == 1)
 					return '5';
- 188:	85 e3       	ldi	r24, 0x35	; 53
- 18a:	19 c0       	rjmp	.+50     	; 0x1be <scan_keypad+0x144>
+ 192:	85 e3       	ldi	r24, 0x35	; 53
+ 194:	19 c0       	rjmp	.+50     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 5 && row == 2)
 					return '6';
- 18c:	86 e3       	ldi	r24, 0x36	; 54
- 18e:	17 c0       	rjmp	.+46     	; 0x1be <scan_keypad+0x144>
+ 196:	86 e3       	ldi	r24, 0x36	; 54
+ 198:	17 c0       	rjmp	.+46     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 5 && row == 3)
 					return 'B';
- 190:	82 e4       	ldi	r24, 0x42	; 66
- 192:	15 c0       	rjmp	.+42     	; 0x1be <scan_keypad+0x144>
+ 19a:	82 e4       	ldi	r24, 0x42	; 66
+ 19c:	15 c0       	rjmp	.+42     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 6 && row == 0)
 					return '7';
- 194:	87 e3       	ldi	r24, 0x37	; 55
- 196:	13 c0       	rjmp	.+38     	; 0x1be <scan_keypad+0x144>
+ 19e:	87 e3       	ldi	r24, 0x37	; 55
+ 1a0:	13 c0       	rjmp	.+38     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 6 && row == 1)
 					return '8';
- 198:	88 e3       	ldi	r24, 0x38	; 56
- 19a:	11 c0       	rjmp	.+34     	; 0x1be <scan_keypad+0x144>
+ 1a2:	88 e3       	ldi	r24, 0x38	; 56
+ 1a4:	11 c0       	rjmp	.+34     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 6 && row == 2)
 					return '9';
- 19c:	89 e3       	ldi	r24, 0x39	; 57
- 19e:	0f c0       	rjmp	.+30     	; 0x1be <scan_keypad+0x144>
+ 1a6:	89 e3       	ldi	r24, 0x39	; 57
+ 1a8:	0f c0       	rjmp	.+30     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 6 && row == 3)
 					return 'C';
- 1a0:	83 e4       	ldi	r24, 0x43	; 67
- 1a2:	0d c0       	rjmp	.+26     	; 0x1be <scan_keypad+0x144>
+ 1aa:	83 e4       	ldi	r24, 0x43	; 67
+ 1ac:	0d c0       	rjmp	.+26     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 7 && row == 0)
 					return '*';
- 1a4:	8a e2       	ldi	r24, 0x2A	; 42
- 1a6:	0b c0       	rjmp	.+22     	; 0x1be <scan_keypad+0x144>
+ 1ae:	8a e2       	ldi	r24, 0x2A	; 42
+ 1b0:	0b c0       	rjmp	.+22     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 7 && row == 1)
 					return '0';
- 1a8:	80 e3       	ldi	r24, 0x30	; 48
- 1aa:	09 c0       	rjmp	.+18     	; 0x1be <scan_keypad+0x144>
+ 1b2:	80 e3       	ldi	r24, 0x30	; 48
+ 1b4:	09 c0       	rjmp	.+18     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 7 && row == 2)
 					return '#';
- 1ac:	83 e2       	ldi	r24, 0x23	; 35
- 1ae:	07 c0       	rjmp	.+14     	; 0x1be <scan_keypad+0x144>
+ 1b6:	83 e2       	ldi	r24, 0x23	; 35
+ 1b8:	07 c0       	rjmp	.+14     	; 0x1c8 <scan_keypad+0x14e>
 				else if (col == 7 && row == 3)
 					return 'D';
- 1b0:	84 e4       	ldi	r24, 0x44	; 68
- 1b2:	05 c0       	rjmp	.+10     	; 0x1be <scan_keypad+0x144>
+ 1ba:	84 e4       	ldi	r24, 0x44	; 68
+ 1bc:	05 c0       	rjmp	.+10     	; 0x1c8 <scan_keypad+0x14e>
 	
 	for (int col = 4; col < 8; col++)
 	{
 		PORTD |= 0xFF;		//reset
-		//PORTD &= ~(1<<col);		//sets specific PORTD/PIN(col) to 0 and everything else 1.
+		PORTD &= ~(1<<col);		//sets specific PORTD/PIN(col) to 0 and everything else 1.
 		for (int row = 0; row < 4; row++) 
- 1b4:	44 30       	cpi	r20, 0x04	; 4
- 1b6:	51 05       	cpc	r21, r1
- 1b8:	0c f4       	brge	.+2      	; 0x1bc <scan_keypad+0x142>
- 1ba:	79 cf       	rjmp	.-270    	; 0xae <scan_keypad+0x34>
- 1bc:	da cf       	rjmp	.-76     	; 0x172 <scan_keypad+0xf8>
+ 1be:	44 30       	cpi	r20, 0x04	; 4
+ 1c0:	51 05       	cpc	r21, r1
+ 1c2:	0c f4       	brge	.+2      	; 0x1c6 <scan_keypad+0x14c>
+ 1c4:	79 cf       	rjmp	.-270    	; 0xb8 <scan_keypad+0x3e>
+ 1c6:	da cf       	rjmp	.-76     	; 0x17c <scan_keypad+0x102>
 				else if (col == 7 && row == 3)
 					return 'D';
 			}
 		}	
 	}
 }
- 1be:	df 91       	pop	r29
- 1c0:	cf 91       	pop	r28
- 1c2:	1f 91       	pop	r17
- 1c4:	0f 91       	pop	r16
- 1c6:	ff 90       	pop	r15
- 1c8:	08 95       	ret
+ 1c8:	df 91       	pop	r29
+ 1ca:	cf 91       	pop	r28
+ 1cc:	1f 91       	pop	r17
+ 1ce:	0f 91       	pop	r16
+ 1d0:	ff 90       	pop	r15
+ 1d2:	08 95       	ret
 
-000001ca <USART_Init>:
+000001d4 <USART_Init>:
 
 void USART_Init(unsigned int ubrr)
 {
 	/*baud rate*/
 	UBRR0H = (uint8_t)(ubrr>>8);
- 1ca:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
+ 1d4:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
 	UBRR0L = (uint8_t)ubrr;
- 1ce:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
+ 1d8:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
 	
 	/*receiver and transmitter*/
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
- 1d2:	88 e1       	ldi	r24, 0x18	; 24
- 1d4:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+ 1dc:	88 e1       	ldi	r24, 0x18	; 24
+ 1de:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
 	
 	/*frame format: 8data, 2stop bit*/
 	UCSR0C = (3<<UCSZ00);
- 1d8:	86 e0       	ldi	r24, 0x06	; 6
- 1da:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
- 1de:	08 95       	ret
+ 1e2:	86 e0       	ldi	r24, 0x06	; 6
+ 1e4:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
+ 1e8:	08 95       	ret
 
-000001e0 <USART_Transmit>:
+000001ea <USART_Transmit>:
 }
 void USART_Transmit(unsigned char ch)
 {
 	
 	/* Wait for empty transmit buffer */
 	while (!(UCSR0A & (1<<UDRE0)));
- 1e0:	e0 ec       	ldi	r30, 0xC0	; 192
- 1e2:	f0 e0       	ldi	r31, 0x00	; 0
- 1e4:	90 81       	ld	r25, Z
- 1e6:	95 ff       	sbrs	r25, 5
- 1e8:	fd cf       	rjmp	.-6      	; 0x1e4 <USART_Transmit+0x4>
+ 1ea:	e0 ec       	ldi	r30, 0xC0	; 192
+ 1ec:	f0 e0       	ldi	r31, 0x00	; 0
+ 1ee:	90 81       	ld	r25, Z
+ 1f0:	95 ff       	sbrs	r25, 5
+ 1f2:	fd cf       	rjmp	.-6      	; 0x1ee <USART_Transmit+0x4>
 	
 	UDR0 = ch;          //This returns the char to the string
- 1ea:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
- 1ee:	08 95       	ret
+ 1f4:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
+ 1f8:	08 95       	ret
 
-000001f0 <main>:
+000001fa <main>:
 	
 }
 void main()
 {
 	DDRB |= 0x00;
- 1f0:	84 b1       	in	r24, 0x04	; 4
- 1f2:	84 b9       	out	0x04, r24	; 4
+ 1fa:	84 b1       	in	r24, 0x04	; 4
+ 1fc:	84 b9       	out	0x04, r24	; 4
 	DDRD |= 0xF0;
- 1f4:	8a b1       	in	r24, 0x0a	; 10
- 1f6:	80 6f       	ori	r24, 0xF0	; 240
- 1f8:	8a b9       	out	0x0a, r24	; 10
+ 1fe:	8a b1       	in	r24, 0x0a	; 10
+ 200:	80 6f       	ori	r24, 0xF0	; 240
+ 202:	8a b9       	out	0x0a, r24	; 10
 	PORTB |= 0x0F;	//Low nibble
- 1fa:	85 b1       	in	r24, 0x05	; 5
- 1fc:	8f 60       	ori	r24, 0x0F	; 15
- 1fe:	85 b9       	out	0x05, r24	; 5
+ 204:	85 b1       	in	r24, 0x05	; 5
+ 206:	8f 60       	ori	r24, 0x0F	; 15
+ 208:	85 b9       	out	0x05, r24	; 5
 	PORTD |= 0xF0;	//High nibble
- 200:	8b b1       	in	r24, 0x0b	; 11
- 202:	80 6f       	ori	r24, 0xF0	; 240
- 204:	8b b9       	out	0x0b, r24	; 11
+ 20a:	8b b1       	in	r24, 0x0b	; 11
+ 20c:	80 6f       	ori	r24, 0xF0	; 240
+ 20e:	8b b9       	out	0x0b, r24	; 11
 	char key;
 	USART_Init(MYUBRR);
- 206:	87 e6       	ldi	r24, 0x67	; 103
- 208:	90 e0       	ldi	r25, 0x00	; 0
- 20a:	df df       	rcall	.-66     	; 0x1ca <USART_Init>
+ 210:	87 e6       	ldi	r24, 0x67	; 103
+ 212:	90 e0       	ldi	r25, 0x00	; 0
+ 214:	df df       	rcall	.-66     	; 0x1d4 <USART_Init>
 	while(1)
 	{
 		
 		key = scan_keypad();
- 20c:	36 df       	rcall	.-404    	; 0x7a <scan_keypad>
+ 216:	31 df       	rcall	.-414    	; 0x7a <scan_keypad>
 		USART_Transmit(key);
- 20e:	e8 df       	rcall	.-48     	; 0x1e0 <USART_Transmit>
+ 218:	e8 df       	rcall	.-48     	; 0x1ea <USART_Transmit>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 210:	2f e9       	ldi	r18, 0x9F	; 159
- 212:	86 e8       	ldi	r24, 0x86	; 134
- 214:	91 e0       	ldi	r25, 0x01	; 1
- 216:	21 50       	subi	r18, 0x01	; 1
- 218:	80 40       	sbci	r24, 0x00	; 0
- 21a:	90 40       	sbci	r25, 0x00	; 0
- 21c:	e1 f7       	brne	.-8      	; 0x216 <main+0x26>
- 21e:	00 c0       	rjmp	.+0      	; 0x220 <main+0x30>
- 220:	00 00       	nop
- 222:	f4 cf       	rjmp	.-24     	; 0x20c <main+0x1c>
+ 21a:	2f e9       	ldi	r18, 0x9F	; 159
+ 21c:	86 e8       	ldi	r24, 0x86	; 134
+ 21e:	91 e0       	ldi	r25, 0x01	; 1
+ 220:	21 50       	subi	r18, 0x01	; 1
+ 222:	80 40       	sbci	r24, 0x00	; 0
+ 224:	90 40       	sbci	r25, 0x00	; 0
+ 226:	e1 f7       	brne	.-8      	; 0x220 <main+0x26>
+ 228:	00 c0       	rjmp	.+0      	; 0x22a <main+0x30>
+ 22a:	00 00       	nop
+ 22c:	f4 cf       	rjmp	.-24     	; 0x216 <main+0x1c>
 
-00000224 <_exit>:
- 224:	f8 94       	cli
+0000022e <_exit>:
+ 22e:	f8 94       	cli
 
-00000226 <__stop_program>:
- 226:	ff cf       	rjmp	.-2      	; 0x226 <__stop_program>
+00000230 <__stop_program>:
+ 230:	ff cf       	rjmp	.-2      	; 0x230 <__stop_program>
