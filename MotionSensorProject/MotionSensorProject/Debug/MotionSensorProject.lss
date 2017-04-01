@@ -1,0 +1,327 @@
+
+MotionSensorProject.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         0000001a  00800100  00000170  00000204  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000170  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000001  0080011a  0080011a  0000021e  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000021e  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000250  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000038  00000000  00000000  00000290  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000326  00000000  00000000  000002c8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000001f3  00000000  00000000  000005ee  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000005fa  00000000  00000000  000007e1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000060  00000000  00000000  00000ddc  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000fe4b  00000000  00000000  00000e3c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000001ab  00000000  00000000  00010c87  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000028  00000000  00000000  00010e32  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_macro  00000637  00000000  00000000  00010e5a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	33 c0       	rjmp	.+102    	; 0x68 <__ctors_end>
+   2:	00 00       	nop
+   4:	4c c0       	rjmp	.+152    	; 0x9e <__bad_interrupt>
+   6:	00 00       	nop
+   8:	4a c0       	rjmp	.+148    	; 0x9e <__bad_interrupt>
+   a:	00 00       	nop
+   c:	48 c0       	rjmp	.+144    	; 0x9e <__bad_interrupt>
+   e:	00 00       	nop
+  10:	46 c0       	rjmp	.+140    	; 0x9e <__bad_interrupt>
+  12:	00 00       	nop
+  14:	44 c0       	rjmp	.+136    	; 0x9e <__bad_interrupt>
+  16:	00 00       	nop
+  18:	42 c0       	rjmp	.+132    	; 0x9e <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	40 c0       	rjmp	.+128    	; 0x9e <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	3e c0       	rjmp	.+124    	; 0x9e <__bad_interrupt>
+  22:	00 00       	nop
+  24:	3c c0       	rjmp	.+120    	; 0x9e <__bad_interrupt>
+  26:	00 00       	nop
+  28:	3a c0       	rjmp	.+116    	; 0x9e <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	38 c0       	rjmp	.+112    	; 0x9e <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	36 c0       	rjmp	.+108    	; 0x9e <__bad_interrupt>
+  32:	00 00       	nop
+  34:	34 c0       	rjmp	.+104    	; 0x9e <__bad_interrupt>
+  36:	00 00       	nop
+  38:	32 c0       	rjmp	.+100    	; 0x9e <__bad_interrupt>
+  3a:	00 00       	nop
+  3c:	30 c0       	rjmp	.+96     	; 0x9e <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	2e c0       	rjmp	.+92     	; 0x9e <__bad_interrupt>
+  42:	00 00       	nop
+  44:	2c c0       	rjmp	.+88     	; 0x9e <__bad_interrupt>
+  46:	00 00       	nop
+  48:	2a c0       	rjmp	.+84     	; 0x9e <__bad_interrupt>
+  4a:	00 00       	nop
+  4c:	28 c0       	rjmp	.+80     	; 0x9e <__bad_interrupt>
+  4e:	00 00       	nop
+  50:	26 c0       	rjmp	.+76     	; 0x9e <__bad_interrupt>
+  52:	00 00       	nop
+  54:	24 c0       	rjmp	.+72     	; 0x9e <__bad_interrupt>
+  56:	00 00       	nop
+  58:	22 c0       	rjmp	.+68     	; 0x9e <__bad_interrupt>
+  5a:	00 00       	nop
+  5c:	20 c0       	rjmp	.+64     	; 0x9e <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	1e c0       	rjmp	.+60     	; 0x9e <__bad_interrupt>
+  62:	00 00       	nop
+  64:	1c c0       	rjmp	.+56     	; 0x9e <__bad_interrupt>
+	...
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_copy_data>:
+  74:	11 e0       	ldi	r17, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	e0 e7       	ldi	r30, 0x70	; 112
+  7c:	f1 e0       	ldi	r31, 0x01	; 1
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
+  80:	05 90       	lpm	r0, Z+
+  82:	0d 92       	st	X+, r0
+  84:	aa 31       	cpi	r26, 0x1A	; 26
+  86:	b1 07       	cpc	r27, r17
+  88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
+
+0000008a <__do_clear_bss>:
+  8a:	21 e0       	ldi	r18, 0x01	; 1
+  8c:	aa e1       	ldi	r26, 0x1A	; 26
+  8e:	b1 e0       	ldi	r27, 0x01	; 1
+  90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
+
+00000092 <.do_clear_bss_loop>:
+  92:	1d 92       	st	X+, r1
+
+00000094 <.do_clear_bss_start>:
+  94:	ab 31       	cpi	r26, 0x1B	; 27
+  96:	b2 07       	cpc	r27, r18
+  98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
+  9a:	5b d0       	rcall	.+182    	; 0x152 <main>
+  9c:	67 c0       	rjmp	.+206    	; 0x16c <_exit>
+
+0000009e <__bad_interrupt>:
+  9e:	b0 cf       	rjmp	.-160    	; 0x0 <__vectors>
+
+000000a0 <USART_Init>:
+	}
+}
+void USART_Init(unsigned int ubrr)
+{
+	/*baud rate*/
+	UBRR0H = (uint8_t)(ubrr>>8);
+  a0:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
+	UBRR0L = (uint8_t)ubrr;
+  a4:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
+	
+	/*receiver and transmitter*/
+	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
+  a8:	88 e1       	ldi	r24, 0x18	; 24
+  aa:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+	
+	/*frame format: 8data, 2stop bit*/
+	UCSR0C = (3<<UCSZ00);
+  ae:	86 e0       	ldi	r24, 0x06	; 6
+  b0:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
+  b4:	08 95       	ret
+
+000000b6 <USART_Transmit>:
+	
+}
+bool USART_Transmit(const char ch[])
+{
+  b6:	cf 93       	push	r28
+  b8:	df 93       	push	r29
+  ba:	dc 01       	movw	r26, r24
+	
+	/* Wait for empty transmit buffer */
+	while (!(UCSR0A & (1<<UDRE0)));
+  bc:	e0 ec       	ldi	r30, 0xC0	; 192
+  be:	f0 e0       	ldi	r31, 0x00	; 0
+  c0:	80 81       	ld	r24, Z
+  c2:	85 ff       	sbrs	r24, 5
+  c4:	fd cf       	rjmp	.-6      	; 0xc0 <USART_Transmit+0xa>
+  c6:	ed 01       	movw	r28, r26
+  c8:	20 e0       	ldi	r18, 0x00	; 0
+  ca:	30 e0       	ldi	r19, 0x00	; 0
+	for (int i = 0; i < strlen(ch); i++)
+	{
+	_delay_ms(25);
+	UDR0 = ch[i];          //This returns the char to the string	
+  cc:	46 ec       	ldi	r20, 0xC6	; 198
+  ce:	50 e0       	ldi	r21, 0x00	; 0
+  d0:	0b c0       	rjmp	.+22     	; 0xe8 <USART_Transmit+0x32>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  d2:	89 e6       	ldi	r24, 0x69	; 105
+  d4:	98 e1       	ldi	r25, 0x18	; 24
+  d6:	01 97       	sbiw	r24, 0x01	; 1
+  d8:	f1 f7       	brne	.-4      	; 0xd6 <USART_Transmit+0x20>
+  da:	00 c0       	rjmp	.+0      	; 0xdc <USART_Transmit+0x26>
+  dc:	00 00       	nop
+  de:	89 91       	ld	r24, Y+
+  e0:	fa 01       	movw	r30, r20
+  e2:	80 83       	st	Z, r24
+bool USART_Transmit(const char ch[])
+{
+	
+	/* Wait for empty transmit buffer */
+	while (!(UCSR0A & (1<<UDRE0)));
+	for (int i = 0; i < strlen(ch); i++)
+  e4:	2f 5f       	subi	r18, 0xFF	; 255
+  e6:	3f 4f       	sbci	r19, 0xFF	; 255
+  e8:	fd 01       	movw	r30, r26
+  ea:	01 90       	ld	r0, Z+
+  ec:	00 20       	and	r0, r0
+  ee:	e9 f7       	brne	.-6      	; 0xea <USART_Transmit+0x34>
+  f0:	31 97       	sbiw	r30, 0x01	; 1
+  f2:	ea 1b       	sub	r30, r26
+  f4:	fb 0b       	sbc	r31, r27
+  f6:	2e 17       	cp	r18, r30
+  f8:	3f 07       	cpc	r19, r31
+  fa:	58 f3       	brcs	.-42     	; 0xd2 <USART_Transmit+0x1c>
+	{
+	_delay_ms(25);
+	UDR0 = ch[i];          //This returns the char to the string	
+	}
+	ch = NULL;
+  fc:	df 91       	pop	r29
+  fe:	cf 91       	pop	r28
+ 100:	08 95       	ret
+
+00000102 <Detect_Motion>:
+		Detect_Motion();
+	return 0;
+}
+
+void Detect_Motion() {
+	if (PINC&(1<<0))            // check for sensor pin PC.0 using bit
+ 102:	30 9b       	sbis	0x06, 0	; 6
+ 104:	25 c0       	rjmp	.+74     	; 0x150 <Detect_Motion+0x4e>
+	{
+		detect = USART_Transmit(key);
+ 106:	80 e0       	ldi	r24, 0x00	; 0
+ 108:	91 e0       	ldi	r25, 0x01	; 1
+ 10a:	d5 df       	rcall	.-86     	; 0xb6 <USART_Transmit>
+ 10c:	80 93 1a 01 	sts	0x011A, r24	; 0x80011a <__data_end>
+		while (PINC&(1<<0)){
+ 110:	1d c0       	rjmp	.+58     	; 0x14c <Detect_Motion+0x4a>
+			ALARM_ON;
+ 112:	2d 9a       	sbi	0x05, 5	; 5
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 114:	83 ec       	ldi	r24, 0xC3	; 195
+ 116:	99 e0       	ldi	r25, 0x09	; 9
+ 118:	01 97       	sbiw	r24, 0x01	; 1
+ 11a:	f1 f7       	brne	.-4      	; 0x118 <Detect_Motion+0x16>
+ 11c:	00 c0       	rjmp	.+0      	; 0x11e <Detect_Motion+0x1c>
+ 11e:	00 00       	nop
+			_delay_us(10000);
+			ALARM_OFF;
+ 120:	2d 98       	cbi	0x05, 5	; 5
+ 122:	83 ec       	ldi	r24, 0xC3	; 195
+ 124:	99 e0       	ldi	r25, 0x09	; 9
+ 126:	01 97       	sbiw	r24, 0x01	; 1
+ 128:	f1 f7       	brne	.-4      	; 0x126 <Detect_Motion+0x24>
+ 12a:	00 c0       	rjmp	.+0      	; 0x12c <Detect_Motion+0x2a>
+ 12c:	00 00       	nop
+			_delay_us(10000);
+			if(!(PINB & (1<<PINB7))) {
+ 12e:	1f 99       	sbic	0x03, 7	; 3
+ 130:	0d c0       	rjmp	.+26     	; 0x14c <Detect_Motion+0x4a>
+ 132:	84 e2       	ldi	r24, 0x24	; 36
+ 134:	90 e0       	ldi	r25, 0x00	; 0
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 136:	2f e3       	ldi	r18, 0x3F	; 63
+ 138:	3d e0       	ldi	r19, 0x0D	; 13
+ 13a:	43 e0       	ldi	r20, 0x03	; 3
+ 13c:	21 50       	subi	r18, 0x01	; 1
+ 13e:	30 40       	sbci	r19, 0x00	; 0
+ 140:	40 40       	sbci	r20, 0x00	; 0
+ 142:	e1 f7       	brne	.-8      	; 0x13c <Detect_Motion+0x3a>
+ 144:	00 c0       	rjmp	.+0      	; 0x146 <Detect_Motion+0x44>
+ 146:	00 00       	nop
+ 148:	01 97       	sbiw	r24, 0x01	; 1
+				for (int i = 0; i < 36; i++)
+ 14a:	a9 f7       	brne	.-22     	; 0x136 <Detect_Motion+0x34>
+
+void Detect_Motion() {
+	if (PINC&(1<<0))            // check for sensor pin PC.0 using bit
+	{
+		detect = USART_Transmit(key);
+		while (PINC&(1<<0)){
+ 14c:	30 99       	sbic	0x06, 0	; 6
+ 14e:	e1 cf       	rjmp	.-62     	; 0x112 <Detect_Motion+0x10>
+ 150:	08 95       	ret
+
+00000152 <main>:
+void Detect_Motion();
+void USART_Init(unsigned int ubrr);
+bool USART_Transmit(const char ch[]);
+int main()
+{
+	DDRC &= ~(1<<PINC0); //configuring PortC pin 0 as input
+ 152:	38 98       	cbi	0x07, 0	; 7
+	PORTC |= (1<<PINC0);
+ 154:	40 9a       	sbi	0x08, 0	; 8
+	DDRB |= 0x00;
+ 156:	84 b1       	in	r24, 0x04	; 4
+ 158:	84 b9       	out	0x04, r24	; 4
+	DDRB |= (1<<DDB5);
+ 15a:	25 9a       	sbi	0x04, 5	; 4
+	PORTB |= 0x0F;	//Low nibble
+ 15c:	85 b1       	in	r24, 0x05	; 5
+ 15e:	8f 60       	ori	r24, 0x0F	; 15
+ 160:	85 b9       	out	0x05, r24	; 5
+	USART_Init(MYUBRR);
+ 162:	87 e6       	ldi	r24, 0x67	; 103
+ 164:	90 e0       	ldi	r25, 0x00	; 0
+ 166:	9c df       	rcall	.-200    	; 0xa0 <USART_Init>
+	while(1)
+		Detect_Motion();
+ 168:	cc df       	rcall	.-104    	; 0x102 <Detect_Motion>
+ 16a:	fe cf       	rjmp	.-4      	; 0x168 <main+0x16>
+
+0000016c <_exit>:
+ 16c:	f8 94       	cli
+
+0000016e <__stop_program>:
+ 16e:	ff cf       	rjmp	.-2      	; 0x16e <__stop_program>
