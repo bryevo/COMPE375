@@ -36,7 +36,7 @@ int main(void)
 	while(1)
 	{
 		INIT_PWM(button);
-		
+		printf("MAIN LOOP");
 		UCSR0B = (0<<TXEN0);
 	}
 }
